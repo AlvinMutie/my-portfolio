@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import SquigglyLoader from './SquigglyLoader';
 
 const Preloader = () => {
     return (
@@ -19,25 +20,22 @@ const Preloader = () => {
                 zIndex: 9999,
             }}
         >
-            <div style={{ position: 'relative', width: '200px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+                <SquigglyLoader size={64} thickness={4} />
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '0.1em' }}
-                >
-                    LOADING
-                </motion.div>
-                <motion.div
-                    animate={{ width: ['0%', '100%', '0%'] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
                     style={{
-                        position: 'absolute',
-                        bottom: '20px',
-                        height: '2px',
-                        backgroundColor: 'var(--accent-color)',
+                        fontSize: '1rem',
+                        fontWeight: 600,
+                        letterSpacing: '0.2em',
+                        color: 'var(--text-muted)',
+                        textTransform: 'uppercase'
                     }}
-                />
+                >
+                    ALVIN MUTIE
+                </motion.div>
             </div>
         </motion.div>
     );

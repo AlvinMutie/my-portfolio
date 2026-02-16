@@ -73,12 +73,12 @@ const ProjectCard = ({ project, index }) => {
             </div>
 
             <div style={{ padding: '2rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{ marginBottom: '0.75rem', fontSize: '1.25rem' }}>{project.title}</h3>
+                <h3 style={{ marginBottom: '0.75rem', fontSize: '1.25rem', textTransform: 'capitalize' }}>{project.title}</h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem', flex: 1 }}>
                     {project.description}
                 </p>
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem', maxHeight: '60px', overflow: 'hidden' }}>
                     {project.tech.map(t => (
                         <span key={t} style={{
                             fontSize: '0.75rem',
@@ -95,19 +95,30 @@ const ProjectCard = ({ project, index }) => {
 
                 <a
                     href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     style={{
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '0.5rem',
+                        justifyContent: 'center',
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: 'var(--selection-bg)',
                         color: 'var(--accent-color)',
-                        fontWeight: 600,
-                        fontSize: '0.9rem',
-                        transition: 'gap 0.2s ease'
+                        transition: 'all 0.3s ease'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.gap = '0.75rem'}
-                    onMouseLeave={(e) => e.currentTarget.style.gap = '0.5rem'}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = 'var(--accent-color)';
+                        e.currentTarget.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'var(--selection-bg)';
+                        e.currentTarget.style.color = 'var(--accent-color)';
+                    }}
+                    title="View Project"
                 >
-                    View Project <ExternalLink size={16} />
+                    <ExternalLink size={18} />
                 </a>
             </div>
         </motion.div>

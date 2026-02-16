@@ -65,9 +65,8 @@ function App() {
     };
 
     return (
-        <Router>
+        <Router basename={import.meta.env.PROD ? '/my-portfolio' : ''}>
             <ScrollToTop />
-            <CustomCursor />
             <AnimatePresence mode="wait">
                 {isLoading && <Preloader key="loader" />}
             </AnimatePresence>

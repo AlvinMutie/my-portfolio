@@ -26,7 +26,11 @@ const Navbar = ({ theme, toggleTheme }) => {
             padding: '1rem 0'
         }}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <NavLink to="/" className="logo" style={{ fontSize: '1.5rem', fontWeight: 700, letterSpacing: '-0.05em' }}>
+                <NavLink
+                    to="/"
+                    className="logo"
+                    style={{ fontSize: '1.5rem', fontWeight: 700, letterSpacing: '-0.05em' }}
+                >
                     PORTFOLIO<span style={{ color: 'var(--accent-color)' }}>.</span>
                 </NavLink>
 

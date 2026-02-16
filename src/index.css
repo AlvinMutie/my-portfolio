@@ -8,6 +8,7 @@ html {
 
   /* Light Theme */
   --bg-color: #ffffff;
+  --bg-rgb: 255, 255, 255;
   --text-color: #1a1a1a;
   --text-muted: #666666;
   --accent-color: #2563eb;
@@ -20,6 +21,7 @@ html {
 
 [data-theme='dark'] {
   --bg-color: #0f172a;
+  --bg-rgb: 15, 23, 42;
   --text-color: #f8fafc;
   --text-muted: #94a3b8;
   --accent-color: #3b82f6;

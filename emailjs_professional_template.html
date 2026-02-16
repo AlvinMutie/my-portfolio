@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #111111;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .content {
+            padding: 40px 30px;
+            color: #333333;
+        }
+
+        .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #888888;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .value {
+            font-size: 16px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            color: #111111;
+            font-weight: 500;
+        }
+
+        .message-box {
+            background-color: #f9fafb;
+            border-left: 4px solid #7c3aed;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background-color: #f4f4f5;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #666666;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .highlight {
+            color: #7c3aed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>New Portfolio <span class="highlight">Inquiry</span></h1>
+        </div>
+        <div class="content">
+            <p style="margin-bottom: 30px; font-size: 16px; color: #555;">
+                You have received a new message from your portfolio contact form.
+            </p>
+
+            <div class="label">SENDER NAME</div>
+            <div class="value">{{name}}</div>
+
+            <div class="label">EMAIL ADDRESS</div>
+            <div class="value">
+                <a href="mailto:{{email}}" style="color: #7c3aed; text-decoration: none;">{{email}}</a>
+            </div>
+
+            <div class="label">TIME RECEIVED</div>
+            <div class="value">{{time}}</div>
+
+            <div class="label">MESSAGE</div>
+            <div class="message-box">
+                <div class="value" style="margin-bottom: 0; white-space: pre-wrap;">{{message}}</div>
+            </div>
+        </div>
+        <div class="footer">
+            &copy; 2026 Alvin Mutie Portfolio. All rights reserved.<br>
+            Secure message sent via EmailJS.
+        </div>
+    </div>
+</body>
+
+</html>
