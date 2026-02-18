@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 // Pages
@@ -65,7 +65,7 @@ function App() {
     };
 
     return (
-        <Router basename={import.meta.env.PROD ? '/my-portfolio' : ''}>
+        <Router>
             <ScrollToTop />
             <AnimatePresence mode="wait">
                 {isLoading && <Preloader key="loader" />}
