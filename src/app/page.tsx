@@ -43,7 +43,7 @@ export default function Home() {
               <motion.h1 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-[12vw] md:text-8xl font-black tracking-tighter leading-[0.9] uppercase py-4"
+                className="text-[10vw] md:text-7xl font-black tracking-tighter leading-[0.9] uppercase py-4"
               >
                 <MorphingTitle />
               </motion.h1>
