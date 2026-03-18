@@ -47,7 +47,7 @@ export default function Navigation() {
               <a
                 key={item.name}
                 href={item.href}
-                className="relative px-4 py-2 text-[10px] font-black uppercase tracking-widest transition-colors group"
+                className="relative px-3 md:px-5 py-2 text-xs md:text-[10px] font-black uppercase tracking-widest transition-colors group"
               >
                 <span className={`relative z-10 ${isActive ? "text-primary" : "text-zinc-400 group-hover:text-foreground"}`}>
                   {item.name}

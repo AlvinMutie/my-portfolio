@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useStore } from "@/lib/store";
 import { MeshDistortMaterial, Float } from "@react-three/drei";
@@ -11,6 +11,10 @@ export default function TechOrb() {
   const auraRef = useRef<THREE.Mesh>(null);
   const mouse = useStore((state) => state.mouse);
   const currentSection = useStore((state) => state.currentSection);
+  const { viewport } = useThree();
+
+  // Responsive check
+  const isMobile = viewport.width < 5;
 
   // Generate particles
   const particlesCount = 2000;
@@ -30,12 +34,12 @@ export default function TechOrb() {
     meshRef.current.rotation.y = time * 0.1;
     auraRef.current.rotation.y = -time * 0.05;
     
-    // Scale tracking - Increased base scale and widened active scale
+    // Scale tracking - Adaptive for mobile
     const isExperience = currentSection === 2;
-    const targetScale = isExperience ? 2.5 : 1.2;
-    const lerpFactor = isExperience ? 0.03 : 0.01; // Slower return to normal
+    const baseScale = isExperience ? (isMobile ? 1.5 : 2.5) : (isMobile ? 0.8 : 1.2);
+    const lerpFactor = isExperience ? 0.03 : 0.01;
     
-    const s = THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, lerpFactor);
+    const s = THREE.MathUtils.lerp(meshRef.current.scale.x, baseScale, lerpFactor);
     meshRef.current.scale.set(s, s, s);
     auraRef.current.scale.set(s * 1.1, s * 1.1, s * 1.1);
 
