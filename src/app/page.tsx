@@ -27,7 +27,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen bg-black text-white selection:bg-primary selection:text-black overflow-x-hidden">
+    <main className="relative min-h-screen selection:bg-primary selection:text-black overflow-x-hidden">
       {/* 3D Core Layer */}
       {mounted && <ScrollSyncManager />}
       <Scene />
@@ -107,7 +107,7 @@ export default function Home() {
         <div className="section-divider my-24 md:my-40" />
 
         {/* Experience / Education Section */}
-        <section id="experience" className="space-y-24 md:space-y-32">
+        <section id="experience" className="space-y-24 md:space-y-32 py-24 md:py-32 px-6 md:px-24 reveal">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-l-4 border-primary pl-8 md:pl-10 reveal">
             <div className="space-y-2">
               <h2 className="text-sm font-black uppercase tracking-[0.4em] text-primary"> / Experience </h2>
@@ -177,7 +177,7 @@ export default function Home() {
         <div className="section-divider my-24 md:my-40" />
 
         {/* Contact Section */}
-        <section id="contact" className="min-h-[80vh] flex flex-col items-center justify-center text-center space-y-16 md:space-y-24">
+        <section id="contact" className="min-h-[80vh] py-24 md:py-32 px-6 md:px-24 flex flex-col items-center justify-center text-center space-y-16 md:space-y-24 bg-black/20 backdrop-blur-[2px]">
           <div className="reveal space-y-4">
             <h2 className="text-sm font-black uppercase tracking-[0.4em] text-primary"> / Contact </h2>
             <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] uppercase"> 
