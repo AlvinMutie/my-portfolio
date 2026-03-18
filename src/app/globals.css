@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Material 3 Dark Palette (Blue/Techy) - High Contrast Refinement */
+  --md-sys-color-primary: #AEC6FF;
+  --md-sys-color-on-primary: #002E69;
+  --md-sys-color-primary-container: #12448F;
+  --md-sys-color-on-primary-container: #D8E2FF;
+  --md-sys-color-secondary: #BFC6DC;
+  --md-sys-color-on-secondary: #293041;
+  --md-sys-color-secondary-container: #3F4759;
+  --md-sys-color-on-secondary-container: #DDE2F9;
+  --md-sys-color-tertiary: #DBC0E5;
+  --md-sys-color-on-tertiary: #3E2B48;
+  --md-sys-color-tertiary-container: #55415F;
+  --md-sys-color-on-tertiary-container: #F7D8FF;
+  --md-sys-color-background: #0B0D0F; /* Deeper black for Link 1 feel */
+  --md-sys-color-on-background: #FDFDFF;
+  --md-sys-color-surface: #121417;
+  --md-sys-color-on-surface: #FDFDFF;
+  --md-sys-color-outline: #44474E;
+  
+  --background: var(--md-sys-color-background);
+  --foreground: var(--md-sys-color-on-background);
+}
+
+@theme inline {
+  --color-primary: var(--md-sys-color-primary);
+  --color-secondary: var(--md-sys-color-secondary);
+  --color-tertiary: var(--md-sys-color-tertiary);
+  --color-surface: var(--md-sys-color-surface);
+  --color-outline: var(--md-sys-color-outline);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Sora', system-ui, sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom "Graphic" Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.graphic-border {
+  border: 2px solid var(--md-sys-color-on-background);
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--md-sys-color-outline), transparent);
+}
+
+.glow {
+  box-shadow: 0 0 40px rgba(174, 198, 255, 0.15);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--md-sys-color-primary) 30%, var(--md-sys-color-tertiary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-text {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
