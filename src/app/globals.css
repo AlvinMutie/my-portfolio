@@ -1,5 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+@theme {
+  --color-primary: #AEC6FF;
+  --color-secondary: #BFC6DC;
+  --color-tertiary: #DBC0E5;
+  --color-surface: #121417;
+  --color-outline: #44474E;
+  --color-background: #0B0D0F;
+}
 
 :root {
   /* Material 3 Dark Palette (Blue/Techy) - High Contrast Refinement */
@@ -15,7 +24,7 @@
   --md-sys-color-on-tertiary: #3E2B48;
   --md-sys-color-tertiary-container: #55415F;
   --md-sys-color-on-tertiary-container: #F7D8FF;
-  --md-sys-color-background: #0B0D0F; /* Deeper black for Link 1 feel */
+  --md-sys-color-background: #0B0D0F;
   --md-sys-color-on-background: #FDFDFF;
   --md-sys-color-surface: #121417;
   --md-sys-color-on-surface: #FDFDFF;
@@ -23,14 +32,6 @@
   
   --background: var(--md-sys-color-background);
   --foreground: var(--md-sys-color-on-background);
-}
-
-@theme inline {
-  --color-primary: var(--md-sys-color-primary);
-  --color-secondary: var(--md-sys-color-secondary);
-  --color-tertiary: var(--md-sys-color-tertiary);
-  --color-surface: var(--md-sys-color-surface);
-  --color-outline: var(--md-sys-color-outline);
 }
 
 body {
