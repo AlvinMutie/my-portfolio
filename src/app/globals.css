@@ -62,10 +62,11 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #4A90E2 30%, #12448F);
+  background: linear-gradient(135deg, #FFFFFF 0%, var(--md-sys-color-primary) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(174, 198, 255, 0.3));
 }
 
 .hero-text {
