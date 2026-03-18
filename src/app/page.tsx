@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useScrollSync } from "@/hooks/useScrollSync";
 import Navigation from "@/components/ui/Navigation";
 import TechOrb from "@/components/three/TechOrb";
+import PhysicsSandbox from "@/components/three/PhysicsSandbox";
 import MorphingTitle from "@/components/ui/MorphingTitle";
 import { Canvas } from "@react-three/fiber";
 import { fetchGitHubRepos, GitHubRepo } from "@/lib/github";
@@ -198,6 +199,8 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      <PhysicsSandbox />
 
       <footer className="py-16 md:py-20 border-t border-white/5 bg-surface/30">
         <div className="container mx-auto px-6 md:px-24 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase text-zinc-600">
