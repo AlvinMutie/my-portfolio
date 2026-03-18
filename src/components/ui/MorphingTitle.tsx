@@ -3,23 +3,12 @@
 import { useState, useEffect } from "react";
 
 const customFonts = [
-  "Abadi MT Condensed Light", "Albertus Extra Bold", "Albertus Medium", "Antique Olive",
-  "Arial", "Arial Black", "Arial MT", "Arial Narrow", "Bazooka", "Book Antiqua",
-  "Bookman Old Style", "Boulder", "Calisto MT", "Calligrapher", "Century Gothic",
-  "Century Schoolbook", "Cezanne", "CG Omega", "CG Times", "Charlesworth", "Chaucer",
-  "Clarendon Condensed", "Comic Sans MS", "Copperplate Gothic Bold", "Copperplate Gothic Light",
-  "Cornerstone", "Coronet", "Courier", "Courier New", "Cuckoo", "Dauphin", "Denmark",
-  "Fransiscan", "Garamond", "Geneva", "Haettenschweiler", "Heather", "Helvetica", "Herald",
-  "Impact", "Jester", "Letter Gothic", "Lithograph", "Lithograph Light", "Long Island",
-  "Lucida Console", "Lucida Handwriting", "Lucida Sans", "Lucida Sans Unicode", "Marigold",
-  "Market", "Matisse ITC", "MS LineDraw", "News GothicMT", "OCR A Extended", "Old Century",
-  "Pegasus", "Pickwick", "Poster", "Pythagoras", "Sceptre", "Sherwood", "Signboard",
-  "Socket", "Steamer", "Storybook", "Subway", "Tahoma", "Technical", "Teletype",
-  "Tempus Sans ITC", "Times", "Times New Roman", "Times New Roman PS", "Trebuchet MS",
-  "Tristan", "Tubular", "Unicorn", "Univers", "Univers Condensed", "Vagabond", "Verdana",
-  "Westminster"
+  "Arial, sans-serif", "'Arial Black', sans-serif", "'Comic Sans MS', cursive, sans-serif",
+  "Impact, sans-serif", "'Lucida Sans Unicode', sans-serif", "Tahoma, sans-serif",
+  "'Trebuchet MS', sans-serif", "Verdana, sans-serif", "'Courier New', Courier, monospace",
+  "'Lucida Console', Monaco, monospace", "Georgia, serif", "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
+  "'Times New Roman', Times, serif", "fantasy", "monospace", "cursive"
 ];
-
 export default function MorphingTitle() {
   const [fontIndex, setFontIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -43,7 +32,7 @@ export default function MorphingTitle() {
       <span 
         className="text-white drop-shadow-[0_10px_40px_rgba(255,255,255,0.4)]"
         style={{ 
-            fontFamily: `"${customFonts[fontIndex]}", sans-serif`,
+            fontFamily: customFonts[fontIndex],
             minWidth: '400px', // Prevent layout shifts as fonts change widths
             display: 'inline-block'
         }}
