@@ -11,6 +11,7 @@ import PhysicsSandbox from "@/components/three/PhysicsSandbox";
 import MorphingTitle from "@/components/ui/MorphingTitle";
 import { Canvas } from "@react-three/fiber";
 import { fetchGitHubRepos, GitHubRepo } from "@/lib/github";
+import { Watcher } from "@/components/ui/Watcher";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -66,9 +67,26 @@ export default function Home() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="flex gap-4 pt-8 md:pt-0"
+                className="flex flex-col sm:flex-row items-center gap-6 pt-8 md:pt-0"
               >
-                <a href="#projects" className="px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest hover:bg-primary transition-all active:scale-95">
+                <div className="relative group flex items-center justify-center">
+                  <div className="absolute -inset-2 bg-gradient-to-r from-primary/30 via-sky-400/20 to-purple-500/20 rounded-3xl blur-xl opacity-60 group-hover:opacity-100 transition duration-500" />
+                  <div className="relative flex flex-col items-center justify-center px-4 py-2 rounded-3xl glass border border-white/10 hover:border-primary/40 transition-colors">
+                    <Watcher
+                      follow={60}
+                      bounce={30}
+                      size={100}
+                      shape="Cube"
+                      eyes="Slant"
+                    />
+                    <div className="flex items-center gap-2 pb-2 text-[10px] font-black uppercase tracking-[0.25em] text-zinc-400">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>Observer // Poke me</span>
+                    </div>
+                  </div>
+                </div>
+
+                <a href="#projects" className="px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest hover:bg-primary transition-all active:scale-95 whitespace-nowrap">
                   Explore Work
                 </a>
               </motion.div>
