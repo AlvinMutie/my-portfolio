@@ -64,16 +64,23 @@ const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 const LINES = [
   "Hey, I see you.",
   "Boop.",
-  "That tickles.",
+  "You reached the footer!",
+  "Available for new projects.",
   "Hi there!",
-  "Stop poking me.",
-  "I'm watching you.",
-  "Again? Okay.",
+  "That tickles.",
+  "I'm watching your cursor.",
+  "Built with passion.",
+  "Enjoying the portfolio?",
   "You found me.",
 ];
-const TINTS = ["#3b5bff", "#179c52", "#e0307f", "#8b5cf6", "#f59e0b"];
+const TINTS = [
+  "rgba(18, 22, 32, 0.95)",
+  "rgba(14, 26, 36, 0.95)",
+  "rgba(22, 18, 34, 0.95)",
+  "rgba(16, 28, 26, 0.95)",
+];
 const KEY_MS = 38;
-const HOLD_MS = 1500;
+const HOLD_MS = 1600;
 
 /* ── the body, in multiple shapes ───────────────────────────
    The eyes are worked out on a sphere whatever the body is, so

@@ -67,26 +67,9 @@ export default function Home() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="flex flex-col sm:flex-row items-center gap-6 pt-8 md:pt-0"
+                className="flex gap-4 pt-8 md:pt-0"
               >
-                <div className="relative group flex items-center justify-center">
-                  <div className="absolute -inset-2 bg-gradient-to-r from-primary/30 via-sky-400/20 to-purple-500/20 rounded-3xl blur-xl opacity-60 group-hover:opacity-100 transition duration-500" />
-                  <div className="relative flex flex-col items-center justify-center px-4 py-2 rounded-3xl glass border border-white/10 hover:border-primary/40 transition-colors">
-                    <Watcher
-                      follow={60}
-                      bounce={30}
-                      size={100}
-                      shape="Cube"
-                      eyes="Slant"
-                    />
-                    <div className="flex items-center gap-2 pb-2 text-[10px] font-black uppercase tracking-[0.25em] text-zinc-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>Observer // Poke me</span>
-                    </div>
-                  </div>
-                </div>
-
-                <a href="#projects" className="px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest hover:bg-primary transition-all active:scale-95 whitespace-nowrap">
+                <a href="#projects" className="px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest hover:bg-primary transition-all active:scale-95">
                   Explore Work
                 </a>
               </motion.div>
@@ -220,13 +203,37 @@ export default function Home() {
 
       <PhysicsSandbox />
 
-      <footer className="py-16 md:py-20 border-t border-white/5 bg-surface/30">
-        <div className="container mx-auto px-6 md:px-24 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase text-zinc-600">
-          <div>{mounted ? "ALVIN MUTIE / 2026" : "ALVIN MUTIE"}</div>
-          <div className="text-center md:text-left">{mounted ? "DESIGNED & DEVELOPED WITH PASSION" : ""}</div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            AVAILABLE FOR NEW PROJECTS
+      <footer className="relative py-16 md:py-24 border-t border-white/5 bg-surface/30 overflow-hidden">
+        {/* Ambient bottom glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-36 bg-primary/5 blur-3xl pointer-events-none rounded-full" />
+
+        <div className="container mx-auto px-6 md:px-24 flex flex-col items-center text-center space-y-10 relative z-10">
+          {/* Watcher Footer Sentinel */}
+          <div className="flex flex-col items-center group">
+            <div className="relative flex items-center justify-center p-2 rounded-3xl transition-transform duration-500 group-hover:scale-105">
+              <div className="absolute inset-0 bg-primary/5 rounded-3xl blur-xl group-hover:bg-primary/10 transition-colors" />
+              <Watcher
+                follow={60}
+                bounce={30}
+                size={84}
+                shape="Cube"
+                eyes="Slant"
+              />
+            </div>
+            
+            <div className="flex items-center gap-2 mt-1 px-3.5 py-1 rounded-full bg-white/[0.03] border border-white/10 text-[9px] font-black uppercase tracking-[0.25em] text-zinc-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <span>Sentinel // Poke to interact</span>
+            </div>
+          </div>
+
+          <div className="w-full pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase text-zinc-500">
+            <div>{mounted ? "ALVIN MUTIE / 2026" : "ALVIN MUTIE"}</div>
+            <div className="text-center">{mounted ? "DESIGNED & DEVELOPED WITH PASSION" : ""}</div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              AVAILABLE FOR NEW PROJECTS
+            </div>
           </div>
         </div>
       </footer>
