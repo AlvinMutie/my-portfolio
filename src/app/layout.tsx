@@ -12,9 +12,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+
 export const metadata: Metadata = {
-  title: "Alvin Mutie | Portfolio",
-  description: "Full Stack Developer & Problem Solver",
+  title: "Alvin Mutie | Full Stack Engineer",
+  description: "Portfolio of Alvin Mutie - Full Stack Software Engineer developing high-performance web applications, intelligent systems, and interactive interfaces.",
 };
 
 export default function RootLayout({
@@ -31,7 +34,6 @@ export default function RootLayout({
               (function() {
                 try {
                   var saved = localStorage.getItem('theme');
-                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                   if (saved === 'light') {
                     document.documentElement.classList.remove('dark');
                     document.documentElement.style.colorScheme = 'light';
@@ -46,10 +48,14 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
-        {children}
+        <Header />
+        <div className="flex-1">
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   );

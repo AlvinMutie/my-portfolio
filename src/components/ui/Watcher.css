@@ -18,17 +18,31 @@
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.55));
 }
 
-/* The ball seamlessly blends with the portfolio's cyber-dark palette:
-   Dark graphite slab with a subtle primary border & glowing ice-blue eyes */
+:root {
+  --fill-slab: #EBEFF5;
+  --stroke-slab: rgba(0, 0, 0, 0.12);
+  --stroke-slab-hover: rgba(37, 99, 235, 0.5);
+  --fill-on: #1D4ED8;
+}
+
+html.dark,
+.dark {
+  --fill-slab: #14171D;
+  --stroke-slab: rgba(174, 198, 255, 0.16);
+  --stroke-slab-hover: rgba(174, 198, 255, 0.45);
+  --fill-on: #AEC6FF;
+}
+
+/* The ball seamlessly blends with the portfolio's palette */
 .eyt-body {
-  fill: var(--fill-slab, #14171D);
-  stroke: var(--stroke-slab, rgba(174, 198, 255, 0.16));
+  fill: var(--fill-slab);
+  stroke: var(--stroke-slab);
   stroke-width: 1.5px;
   transition: fill 250ms ease, stroke 250ms ease;
 }
 
 .eyt-eye {
-  fill: var(--fill-on, #AEC6FF);
+  fill: var(--fill-on);
   filter: drop-shadow(0 0 5px rgba(174, 198, 255, 0.45));
   transition: fill 250ms ease;
 }
