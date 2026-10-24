@@ -287,16 +287,28 @@ export default function BackgroundPaths({
       }
     };
     document.addEventListener("visibilitychange", onVisibility);
-    // Follow theme changes, which only change the inherited text color.
-    const colorTimer = window.setInterval(() => {
-      if (!visible) {
-        return;
-      }
+    // Follow theme changes instantly when the html class changes, and also poll as a fallback
+    const updateThemeColor = () => {
       const next = getComputedStyle(canvas).color;
       if (next && next !== color) {
         color = next;
         paint();
       }
+    };
+
+    const themeObserver = new MutationObserver(() => {
+      updateThemeColor();
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    const colorTimer = window.setInterval(() => {
+      if (!visible) {
+        return;
+      }
+      updateThemeColor();
     }, 500);
 
     const onMove = (event: PointerEvent) => {
@@ -324,6 +336,7 @@ export default function BackgroundPaths({
       cancelAnimationFrame(raf);
       resizeObserver.disconnect();
       intersection.disconnect();
+      themeObserver.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       window.clearInterval(colorTimer);
       root.removeEventListener("pointermove", onMove);

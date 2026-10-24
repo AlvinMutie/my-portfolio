@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: var(--primary);
   --color-background: var(--background);
@@ -17,17 +19,31 @@
   --primary-accent: #3B82F6;
   --surface: #F1F3F6;
   --outline: #E2E4E8;
-  --card-bg: rgba(255, 255, 255, 0.75);
+  --card-bg: rgba(255, 255, 255, 0.85);
   --card-border: rgba(0, 0, 0, 0.08);
   --glow-color: rgba(37, 99, 235, 0.15);
   
   --font-ui: 'Sora', system-ui, sans-serif;
-  color-scheme: light dark;
+  color-scheme: light;
+
+  @variant dark {
+    --background: #0B0D0F;
+    --foreground: #FDFDFF;
+    --primary: #AEC6FF;
+    --primary-accent: #AEC6FF;
+    --surface: #121417;
+    --outline: #44474E;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --glow-color: rgba(174, 198, 255, 0.2);
+    color-scheme: dark;
+  }
 }
 
 html.dark,
-:root.dark {
-  /* Dark Mode */
+:root.dark,
+.dark {
+  /* Dark Mode fallback */
   --background: #0B0D0F;
   --foreground: #FDFDFF;
   --primary: #AEC6FF;
@@ -37,6 +53,7 @@ html.dark,
   --card-bg: rgba(255, 255, 255, 0.03);
   --card-border: rgba(255, 255, 255, 0.08);
   --glow-color: rgba(174, 198, 255, 0.2);
+  color-scheme: dark;
 }
 
 body {
@@ -45,7 +62,7 @@ body {
   font-family: 'Sora', system-ui, sans-serif;
   margin: 0;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 300ms ease, color 300ms ease;
+  transition: background-color 250ms ease, color 250ms ease;
 }
 
 /* Custom Glass & Utilities */
