@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import BackgroundPaths from "@/components/ui/BackgroundPaths";
+import AsciiTerminal from "@/components/ui/AsciiTerminal";
+import TelemetryDashboard from "@/components/ui/TelemetryDashboard";
 import { motion } from "framer-motion";
-import { ArrowRight, Code2, Sparkles, Terminal, Layers } from "lucide-react";
+import { ArrowRight, Code2, Sparkles, Terminal } from "lucide-react";
 
 export default function Home() {
   return (
@@ -56,8 +58,13 @@ export default function Home() {
         </BackgroundPaths>
       </section>
 
-      {/* Highlights / Disciplines Overview */}
-      <section className="relative py-24 px-6 md:px-12 max-w-6xl mx-auto">
+      {/* ASCII Terminal Screen (Powered by Asciify) */}
+      <section className="relative px-6 md:px-12 -mt-16 z-20">
+        <AsciiTerminal />
+      </section>
+
+      {/* Core Engineering Disciplines */}
+      <section className="relative py-16 px-6 md:px-12 max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <p className="text-xs font-mono font-semibold uppercase tracking-wider text-blue-600 dark:text-[#AEC6FF] mb-2">
@@ -109,6 +116,11 @@ export default function Home() {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* Telemetry & Velocity Dashboard (Powered by Bklit UI) */}
+      <section className="relative px-6 md:px-12 pb-16">
+        <TelemetryDashboard />
       </section>
     </main>
   );
