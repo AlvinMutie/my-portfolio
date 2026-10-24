@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Scene from "@/components/three/Scene";
+import BackgroundPaths from "@/components/ui/BackgroundPaths";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { motion } from "framer-motion";
 import { useScrollSync } from "@/hooks/useScrollSync";
@@ -30,9 +30,15 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen selection:bg-primary selection:text-black overflow-x-hidden">
-      {/* 3D Core Layer */}
       {mounted && <ScrollSyncManager />}
-      <Scene />
+      {/* Background Ribbon Layer (Replaces 3D Blob) */}
+      <div className="fixed inset-0 -z-20 h-screen w-full bg-[#0B0D0F] overflow-hidden pointer-events-none">
+        <BackgroundPaths
+          className="h-full w-full bg-transparent text-[#AEC6FF] dark:bg-transparent dark:text-[#AEC6FF]"
+          children={null}
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(0,0,0,0.5)_100%)] pointer-events-none" />
+      </div>
       
       <Navigation />
 
