@@ -2,36 +2,41 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #AEC6FF;
-  --color-secondary: #BFC6DC;
-  --color-tertiary: #DBC0E5;
-  --color-surface: #121417;
-  --color-outline: #44474E;
-  --color-background: #0B0D0F;
+  --color-primary: var(--primary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-outline: var(--outline);
 }
 
 :root {
-  /* Material 3 Dark Palette (Blue/Techy) - High Contrast Refinement */
-  --md-sys-color-primary: #AEC6FF;
-  --md-sys-color-on-primary: #002E69;
-  --md-sys-color-primary-container: #12448F;
-  --md-sys-color-on-primary-container: #D8E2FF;
-  --md-sys-color-secondary: #BFC6DC;
-  --md-sys-color-on-secondary: #293041;
-  --md-sys-color-secondary-container: #3F4759;
-  --md-sys-color-on-secondary-container: #DDE2F9;
-  --md-sys-color-tertiary: #DBC0E5;
-  --md-sys-color-on-tertiary: #3E2B48;
-  --md-sys-color-tertiary-container: #55415F;
-  --md-sys-color-on-tertiary-container: #F7D8FF;
-  --md-sys-color-background: #0B0D0F;
-  --md-sys-color-on-background: #FDFDFF;
-  --md-sys-color-surface: #121417;
-  --md-sys-color-on-surface: #FDFDFF;
-  --md-sys-color-outline: #44474E;
+  /* Default Light Mode */
+  --background: #FAFAFC;
+  --foreground: #0B0D0F;
+  --primary: #2563EB;
+  --primary-accent: #3B82F6;
+  --surface: #F1F3F6;
+  --outline: #E2E4E8;
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --glow-color: rgba(37, 99, 235, 0.15);
   
-  --background: var(--md-sys-color-background);
-  --foreground: var(--md-sys-color-on-background);
+  --font-ui: 'Sora', system-ui, sans-serif;
+  color-scheme: light dark;
+}
+
+html.dark,
+:root.dark {
+  /* Dark Mode */
+  --background: #0B0D0F;
+  --foreground: #FDFDFF;
+  --primary: #AEC6FF;
+  --primary-accent: #AEC6FF;
+  --surface: #121417;
+  --outline: #44474E;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --glow-color: rgba(174, 198, 255, 0.2);
 }
 
 body {
@@ -40,38 +45,19 @@ body {
   font-family: 'Sora', system-ui, sans-serif;
   margin: 0;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 300ms ease, color 300ms ease;
 }
 
-/* Custom "Graphic" Utilities */
+/* Custom Glass & Utilities */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.graphic-border {
-  border: 2px solid var(--md-sys-color-on-background);
-}
-
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--md-sys-color-outline), transparent);
-}
-
-.glow {
-  box-shadow: 0 0 40px rgba(174, 198, 255, 0.15);
+  border: 1px solid var(--card-border);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #FFFFFF 0%, var(--md-sys-color-primary) 100%);
+  background: linear-gradient(135deg, var(--foreground) 0%, var(--primary-accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 20px rgba(174, 198, 255, 0.3));
-}
-
-.hero-text {
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
 }

@@ -336,7 +336,7 @@ export default function BackgroundPaths({
   return (
     <div
       className={cn(
-        "relative flex min-h-[560px] w-full items-center justify-center overflow-hidden bg-[#0B0D0F] text-[#AEC6FF]",
+        "relative flex min-h-[560px] w-full items-center justify-center overflow-hidden bg-[#FAFAFC] text-blue-600 dark:bg-[#0B0D0F] dark:text-[#AEC6FF] transition-colors duration-300",
         className
       )}
       ref={rootRef}
