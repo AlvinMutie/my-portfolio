@@ -3,11 +3,8 @@
 /**
  * @author: @dorianbaffier
  * @description: Split Nav
- * @version: 2.0.0
- * @date: 2026-10-14
- * @license: MIT
+ * @version: 2.1.0
  * @website: https://kokonutui.com
- * @github: https://github.com/kokonut-labs/kokonutui
  */
 
 import {
@@ -20,7 +17,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   type FocusEvent,
   type KeyboardEvent,
@@ -42,13 +39,12 @@ export interface MorphicNavbarProps {
   /** Links keyed by their href, in display order. */
   items?: Record<string, NavItem>;
   /**
-   * Initially active path. Defaults to the first item's path. When an item's
-   * path matches the current route, that item is active instead.
+   * Initially active path. Defaults to the first item's path.
    */
   defaultPath?: string;
   /**
    * After 80px of page scroll, fold the bar down to the active link plus a
-   * chevron that opens it again.
+   * chevron that opens it again. Defaults to false.
    */
   compact?: boolean;
   className?: string;
@@ -65,12 +61,11 @@ const SPLIT = 8;
 /** Gap a hovered link opens around itself, in px. */
 const HOVER_SPLIT = 2;
 /** Movement before a press turns into a scrub, in px. */
-const DRAG_SLOP = 4;
+const DRAG_SLOP = 10;
 /** Seconds of release velocity added to where a flick lands. */
 const PROJECTION = 0.16;
 /** Pointer samples older than this (ms) do not count toward release velocity. */
 const VELOCITY_WINDOW = 90;
-/** Page scroll past which `compact` folds the bar, in px. */
 const COMPACT_AFTER = 80;
 const CHEVRON_SIZE = 36;
 const CHEVRON_GAP = 4;
@@ -81,31 +76,11 @@ const round2 = (v: number) => Math.round(v * 100) / 100;
 const clamp = (v: number, min: number, max: number) =>
   Math.min(max, Math.max(min, v));
 
-const matchesPath = (path: string, current: string) =>
-  path === current || (path !== "/" && current.startsWith(`${path}/`));
-
-/** The longest item path that matches, so "/docs/a" beats "/docs". */
-const findItemPath = (paths: string[], current: string | null) => {
-  let match: string | undefined;
-  for (const path of paths) {
-    if (
-      current &&
-      matchesPath(path, current) &&
-      (!match || path.length > match.length)
-    ) {
-      match = path;
-    }
-  }
-  return match;
-};
-
 /** How much link `k` is "the split one" when the split sits at `focus`. */
 const bump = (focus: number, k: number) => Math.max(0, 1 - Math.abs(focus - k));
 
 /**
- * x offset of every link for a split centred on `focus`, which may be
- * fractional while scrubbing. Offsets are centred so the bar grows evenly on
- * both sides.
+ * x offset of every link for a split centred on `focus`.
  */
 const splitOffsets = (count: number, focus: number, hover: number | null) => {
   const cumulative = [0];
@@ -131,10 +106,6 @@ interface BarLayout {
   rowWidth: number;
 }
 
-/**
- * Folded: the active link slides to the middle with the chevron beside it,
- * the rest tuck in behind it.
- */
 const foldedOffsets = (layout: BarLayout, active: number) => {
   const { centers, widths, rowWidth } = layout;
   const activeWidth = widths[active] ?? 0;
@@ -147,7 +118,6 @@ const foldedOffsets = (layout: BarLayout, active: number) => {
   return { xs, chevron };
 };
 
-/** Fractional link index under a row-local x, from the links' centres. */
 const indexAt = (centers: number[], x: number) => {
   const last = centers.length - 1;
   if (last <= 0 || x <= (centers[0] ?? 0)) {
@@ -186,7 +156,6 @@ const releaseVelocity = (samples: DragState["samples"], now: number) => {
 const capScale = (gap: number, fold: number) =>
   `scaleX(${round2(clamp(1 - gap / 1.5, 0, 1) * (1 - clamp(fold * 4, 0, 1)))})`;
 
-/** Where each key sends keyboard focus, from index `i` of `n` links. */
 const KEY_MOVES: Record<string, (i: number, n: number) => number> = {
   ArrowLeft: (i) => i - 1,
   ArrowRight: (i) => i + 1,
@@ -194,30 +163,9 @@ const KEY_MOVES: Record<string, (i: number, n: number) => number> = {
   End: (_, n) => n - 1,
 };
 
-const SURFACE = "bg-zinc-900/90 dark:bg-zinc-100/90 backdrop-blur-md shadow-sm";
+const SURFACE = "bg-zinc-900 dark:bg-zinc-100 shadow-sm";
 const FOCUS_RING =
-  "outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset";
-
-const followHash = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
-  if (
-    event.defaultPrevented ||
-    event.metaKey ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    event.altKey
-  ) {
-    return;
-  }
-  event.preventDefault();
-  const target = document.getElementById(decodeURIComponent(href.slice(1)));
-  if (!target) {
-    return;
-  }
-  target.scrollIntoView();
-  if (window.location.hash !== href) {
-    window.history.pushState(null, "", href);
-  }
-};
+  "outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-inset";
 
 function ChevronIcon() {
   return (
@@ -243,7 +191,6 @@ interface SegmentProps {
   prevX?: MotionValue<number>;
   nextX?: MotionValue<number>;
   fold: MotionValue<number>;
-  /** Stays visible when the bar folds. */
   pinned: boolean;
   hidden: boolean;
   highlighted: boolean;
@@ -281,9 +228,6 @@ function Segment({
     nextX ? capScale(nextX.get() - x.get(), fold.get()) : "scaleX(0)"
   );
 
-  const isHash = href.startsWith("#");
-  const NavLink = isHash ? "a" : Link;
-
   return (
     <motion.div
       className={cn(
@@ -295,10 +239,10 @@ function Segment({
       onPointerLeave={(event) => onHover(event, false)}
       style={{ transform, opacity }}
     >
-      <NavLink
+      <Link
         aria-current={current ? "page" : undefined}
         className={cn(
-          "relative flex h-9 items-center rounded-xl px-4 font-medium text-sm transition-colors duration-150 border border-black/5 dark:border-white/10",
+          "relative flex h-9 items-center rounded-xl px-4 font-medium text-sm transition-colors duration-150 cursor-pointer select-none",
           SURFACE,
           FOCUS_RING,
           highlighted
@@ -308,12 +252,7 @@ function Segment({
         draggable={false}
         href={href}
         inert={hidden}
-        onClick={(event: MouseEvent<HTMLAnchorElement>) => {
-          onSelect();
-          if (isHash) {
-            followHash(event, href);
-          }
-        }}
+        onClick={onSelect}
         onDragStart={(event: MouseEvent) => event.preventDefault()}
         onFocus={onFocus}
         ref={linkRef}
@@ -322,7 +261,7 @@ function Segment({
           <motion.span
             aria-hidden="true"
             className={cn(
-              "absolute inset-y-0 -left-px w-3 origin-left",
+              "absolute inset-y-0 -left-px w-3 origin-left pointer-events-none",
               SURFACE
             )}
             style={{ transform: leftCap }}
@@ -332,21 +271,21 @@ function Segment({
           <motion.span
             aria-hidden="true"
             className={cn(
-              "absolute inset-y-0 -right-px w-3 origin-right",
+              "absolute inset-y-0 -right-px w-3 origin-right pointer-events-none",
               SURFACE
             )}
             style={{ transform: rightCap }}
           />
         ) : null}
-        <span className="relative">{name}</span>
+        <span className="relative z-10">{name}</span>
         <span
           aria-hidden="true"
           className={cn(
-            "absolute bottom-1.5 left-1/2 h-0.5 w-3 -translate-x-1/2 rounded-full bg-blue-500 dark:bg-blue-600 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none",
+            "absolute bottom-1.5 left-1/2 h-0.5 w-3 -translate-x-1/2 rounded-full bg-orange-500 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none z-10",
             highlighted ? "scale-x-100" : "scale-x-0"
           )}
         />
-      </NavLink>
+      </Link>
     </motion.div>
   );
 }
@@ -400,28 +339,34 @@ function useUserOpen(scrolledPast: boolean) {
 
 export function MorphicNavbar({
   items = DEFAULT_PORTFOLIO_NAV,
-  defaultPath,
   compact = false,
   className,
 }: MorphicNavbarProps) {
   const entries = Object.entries(items);
   const paths = entries.map(([path]) => path);
   const count = entries.length;
+
   const pathname = usePathname();
-  const [activePath, setActivePath] = useState(
-    () => findItemPath(paths, pathname) ?? defaultPath ?? paths[0] ?? "/"
-  );
+  const router = useRouter();
 
-  const [syncedPathname, setSyncedPathname] = useState(pathname);
-  if (pathname !== syncedPathname) {
-    setSyncedPathname(pathname);
-    const routePath = findItemPath(paths, pathname);
-    if (routePath) {
-      setActivePath(routePath);
+  // Normalize path to handle /my-portfolio basePath reliably
+  const currentNormalized = useMemo(() => {
+    if (!pathname) return "/";
+    let p = pathname;
+    if (p.startsWith("/my-portfolio")) {
+      p = p.replace(/^\/my-portfolio/, "") || "/";
     }
-  }
+    if (p.length > 1 && p.endsWith("/")) {
+      p = p.slice(0, -1);
+    }
+    return p;
+  }, [pathname]);
 
-  const activeIndex = paths.indexOf(findItemPath(paths, activePath) ?? "");
+  const activeIndex = useMemo(() => {
+    const idx = paths.findIndex((p) => p === currentNormalized);
+    return idx >= 0 ? idx : 0;
+  }, [paths, currentNormalized]);
+
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [keyboardInside, setKeyboardInside] = useState(false);
@@ -439,7 +384,6 @@ export function MorphicNavbar({
 
   const highlightIndex = previewIndex ?? activeIndex;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: count change resets offsets
   const xs = useMemo(
     () => splitOffsets(count, activeIndex, null).map((x) => motionValue(x)),
     [count]
@@ -455,7 +399,6 @@ export function MorphicNavbar({
   const layoutRef = useRef<BarLayout | null>(null);
   const dragRef = useRef<DragState | null>(null);
   const instantRef = useRef(false);
-  const suppressClickRef = useRef(false);
   const reduceMotion = useReducedMotion();
   const reduceRef = useRef(false);
   reduceRef.current = reduceMotion === true;
@@ -528,10 +471,10 @@ export function MorphicNavbar({
     instantRef.current = false;
   }, [activeIndex, highlightIndex, hoverIndex, folded, count]);
 
-  const selectIndex = (index: number) => {
-    const path = paths[index];
-    if (path !== undefined) {
-      setActivePath(path);
+  const navigateToIndex = (index: number) => {
+    const targetPath = paths[index];
+    if (targetPath) {
+      router.push(targetPath);
     }
   };
 
@@ -585,10 +528,13 @@ export function MorphicNavbar({
     if (!drag || drag.pointerId !== event.pointerId) {
       return;
     }
+    const wasScrubbing = drag.scrubbing;
     dragRef.current = null;
-    if (!drag.scrubbing) {
+
+    if (!wasScrubbing) {
       return;
     }
+
     setScrubbing(false);
     setPreviewIndex(null);
     if (!commit) {
@@ -599,20 +545,7 @@ export function MorphicNavbar({
     const index = Math.round(
       toFocus(event.clientX + velocity * PROJECTION, drag)
     );
-    suppressClickRef.current = true;
-    setTimeout(() => {
-      suppressClickRef.current = false;
-    }, 0);
-    selectIndex(index);
-    linkRefs.current[index]?.click();
-  };
-
-  const onClickCapture = (event: MouseEvent<HTMLDivElement>) => {
-    if (suppressClickRef.current && event.isTrusted) {
-      suppressClickRef.current = false;
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    navigateToIndex(index);
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -669,13 +602,12 @@ export function MorphicNavbar({
 
   return (
     <nav
-      aria-label="Main"
+      aria-label="Main Navigation"
       className={cn("flex justify-center px-2 py-1", className)}
     >
       <div
         className="relative flex touch-pan-y select-none items-center"
         onBlur={onRowBlur}
-        onClickCapture={onClickCapture}
         onKeyDown={onKeyDown}
         onPointerCancel={(event) => endDrag(event, false)}
         onPointerDown={onPointerDown}
@@ -698,7 +630,7 @@ export function MorphicNavbar({
             nextX={xs[index + 1]}
             onFocus={(event) => onLinkFocus(index, event)}
             onHover={(event, entering) => onHover(index, event, entering)}
-            onSelect={() => selectIndex(index)}
+            onSelect={() => navigateToIndex(index)}
             pinned={index === activeIndex}
             prevX={xs[index - 1]}
             x={xs[index] ?? fold}
